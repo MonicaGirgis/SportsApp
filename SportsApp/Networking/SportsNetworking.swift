@@ -14,7 +14,7 @@ enum SportsNetworking{
     //case getLeaguesInCountry
     case getSeasonsInLeague
     //case getTeamsInLeague
-    case getLeagueDetails
+    case getLeagueDetails(id: Int)
 }
 
 extension SportsNetworking : TargetType{
@@ -33,8 +33,8 @@ extension SportsNetworking : TargetType{
             return "all_leagues.php"
         case .getSeasonsInLeague:
             return "search_all_seasons.php?id=4328"
-        case .getLeagueDetails:
-            return "lookupleague.php?id=4346"
+        case .getLeagueDetails(let id):
+            return "lookupleague.php?id=\(id)"
         }
     }
     
@@ -44,26 +44,5 @@ extension SportsNetworking : TargetType{
             return .get
         }
     }
-    
-    
+   
 }
-
-
-//class FetchData : APICall<SportsNetworking>{
-//
-//    func getSports(){
-//        self.fetchData(target: .getSports, responseClass: SportData.self) { (result) in
-//            switch result {
-//            case .success(let response):
-//                guard let sports = result.value else {
-//                    return
-//                }
-//                for sport in sports?.sports ?? []{
-//                    print(sport.name)
-//                }
-//            case .failure(let error):
-//                print(error)
-//            }
-//        }
-//    }
-//}

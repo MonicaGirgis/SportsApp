@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import SDWebImage
 class AllSportsViewController: UIViewController {
     
     
@@ -30,9 +30,7 @@ class AllSportsViewController: UIViewController {
                         switch result {
                         case .success(let response):
                             self.sportArray = response ?? SportData()
-                            for sport in self.sportArray.sports {
-                               // print(sport.name)
-                            }
+                          
                         case .failure(let error):
                             print(error)
                         }
@@ -49,12 +47,9 @@ extension AllSportsViewController:UICollectionViewDataSource,UICollectionViewDel
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AllSportsCustomCollectionViewCell", for: indexPath) as! AllSportsCustomCollectionViewCell
         cell.sportsName.text = sportArray.sports[indexPath.row].name
-        cell.sportsImage.image = UIImage(named: "TheHobbit")
-        //cell.sportsImage
-        /* self.carView.layer.borderWidth = 3
-         self.carView.layer.borderColor = UIColor(red:222/255, green:69/255, blue:0/255, alpha: 1).cgColor
-         carView.layer.cornerRadius = 8;
-         carView.layer.masksToBounds = true;*/
+        let imageUrl = sportArray.sports[indexPath.row].thumb
+        cell.sportsImage.sd_setImage(with: URL(string: imageUrl), placeholderImage: UIImage(named: "JourneyToTheCenterOfEarth"))
+      // cell.sportsImage.Alamofire.setImage(withURL: imageUrl)
         cell.sportsView.layer.borderWidth = 3
         cell.sportsView.layer.borderColor = UIColor(red:222/255, green:69/255, blue:0/255, alpha: 1).cgColor
         cell.sportsView.layer.cornerRadius = 8

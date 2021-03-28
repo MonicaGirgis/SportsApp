@@ -30,7 +30,7 @@ static CGRect JGProgressHUD_CGRectIntegral(CGRect rect) {
     
     CFAbsoluteTime _displayTimestamp;
     
-    BOOL _effectiveIndicatorViewNeedsUpdate;
+    JGProgressHUDIndicatorView *__nullable _indicatorViewAfterTransitioning;
     
     UIView *__nonnull _blurViewContainer;
     UIView *__nonnull _shadowView;
@@ -39,8 +39,6 @@ static CGRect JGProgressHUD_CGRectIntegral(CGRect rect) {
 
 @property (nonatomic, strong, readonly, nonnull) UIVisualEffectView *blurView;
 @property (nonatomic, strong, readonly, nonnull) UIVisualEffectView *vibrancyView;
-
-@property (nonatomic, strong, readonly, nonnull) JGProgressHUDIndicatorView *effectiveIndicatorView;
 
 @end
 
@@ -84,6 +82,8 @@ static CGRect keyboardFrame = (CGRect){{0.0, 0.0}, {0.0, 0.0}};
 }
 
 + (void)load {
+    [super load];
+    
     @autoreleasepool {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardFrameWillChange:) name:UIKeyboardWillChangeFrameNotification object:nil];
         
@@ -153,8 +153,7 @@ static CGRect keyboardFrame = (CGRect){{0.0, 0.0}, {0.0, 0.0}};
         [self.HUDView addSubview:_shadowView];
         
         _indicatorView = [[JGProgressHUDIndeterminateIndicatorView alloc] init];
-        _effectiveIndicatorView = _indicatorView;
-        [self.effectiveIndicatorView setUpForHUDStyle:self.style vibrancyEnabled:self.vibrancyEnabled];
+        [self.indicatorView setUpForHUDStyle:self.style vibrancyEnabled:self.vibrancyEnabled];
         
         self.hidden = YES;
         self.backgroundColor = [UIColor clearColor];
@@ -296,7 +295,7 @@ static CGRect keyboardFrame = (CGRect){{0.0, 0.0}, {0.0, 0.0}};
         return;
     }
     
-    CGRect indicatorFrame = self.effectiveIndicatorView.frame;
+    CGRect indicatorFrame = self.indicatorView.frame;
     indicatorFrame.origin.y = self.contentInsets.top;
     
     CGRect insetFrame = [self insetFrameForView:self];
@@ -363,7 +362,7 @@ static CGRect keyboardFrame = (CGRect){{0.0, 0.0}, {0.0, 0.0}};
     detailFrame.origin.x = center.x - detailFrame.size.width/2.0;
     
     [UIView performWithoutAnimation:^{
-        self.effectiveIndicatorView.frame = indicatorFrame;
+        self.indicatorView.frame = indicatorFrame;
         self->_textLabel.frame = JGProgressHUD_CGRectIntegral(labelFrame);
         self->_detailTextLabel.frame = JGProgressHUD_CGRectIntegral(detailFrame);
     }];
@@ -407,16 +406,16 @@ static CGRect keyboardFrame = (CGRect){{0.0, 0.0}, {0.0, 0.0}};
         [self.targetView setNeedsFocusUpdate];
     }
 #endif
-    
+
     self.hidden = NO;
     
     _transitioning = NO;
     // Correct timestamp to the current time for animated presentations:
     _displayTimestamp = CFAbsoluteTimeGetCurrent();
     
-    if (_effectiveIndicatorViewNeedsUpdate) {
-        self.effectiveIndicatorView = self.indicatorView;
-        _effectiveIndicatorViewNeedsUpdate = NO;
+    if (_indicatorViewAfterTransitioning) {
+        self.indicatorView = _indicatorViewAfterTransitioning;
+        _indicatorViewAfterTransitioning = nil;
         _updateAfterAppear = NO;
     }
     else if (_updateAfterAppear) {
@@ -475,7 +474,7 @@ static CGRect keyboardFrame = (CGRect){{0.0, 0.0}, {0.0, 0.0}};
     [NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:_targetView attribute:NSLayoutAttributeHeight multiplier:1.0 constant:0.0].active = YES;
     [NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:_targetView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0].active = YES;
     [NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_targetView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0.0].active = YES;
-    
+
     [self setNeedsLayout];
     [self layoutIfNeeded];
     
@@ -691,7 +690,7 @@ static UIViewAnimationOptions UIViewAnimationOptionsFromUIViewAnimationCurve(UIV
         UIVibrancyEffect *vibrancyEffect = (self.vibrancyEnabled ? [UIVibrancyEffect effectForBlurEffect:(UIBlurEffect *)self.blurView.effect] : nil);
         
         _vibrancyView = [[UIVisualEffectView alloc] initWithEffect:vibrancyEffect];
-        
+
         [self.blurView.contentView addSubview:_vibrancyView];
     }
     
@@ -703,8 +702,8 @@ static UIViewAnimationOptions UIViewAnimationOptionsFromUIViewAnimationCurve(UIV
         _contentView = [[UIView alloc] init];
         [self.vibrancyView.contentView addSubview:_contentView];
         
-        if (self.effectiveIndicatorView != nil) {
-            [self.contentView addSubview:self.effectiveIndicatorView];
+        if (self.indicatorView != nil) {
+            [self.contentView addSubview:self.indicatorView];
         }
     }
     
@@ -774,11 +773,11 @@ static UIViewAnimationOptions UIViewAnimationOptionsFromUIViewAnimationCurve(UIV
     if (self.wantsFocus == wantsFocus) {
         return;
     }
-    
+
     _wantsFocus = wantsFocus;
-    
+
     self.userInteractionEnabled = self.wantsFocus;
-    
+
     [self.targetView setNeedsFocusUpdate];
 }
 #endif
@@ -869,7 +868,7 @@ static UIViewAnimationOptions UIViewAnimationOptionsFromUIViewAnimationCurve(UIV
     
     self.vibrancyView.effect = vibrancyEffect;
     
-    [self.effectiveIndicatorView setUpForHUDStyle:self.style vibrancyEnabled:self.vibrancyEnabled];
+    [self.indicatorView setUpForHUDStyle:self.style vibrancyEnabled:self.vibrancyEnabled];
 }
 
 - (void)setIndicatorView:(JGProgressHUDIndicatorView *)indicatorView {
@@ -877,29 +876,18 @@ static UIViewAnimationOptions UIViewAnimationOptionsFromUIViewAnimationCurve(UIV
         return;
     }
     
-    _indicatorView = indicatorView;
-    
     if (_transitioning) {
-        _effectiveIndicatorViewNeedsUpdate = YES;
-        return;
-    }
-    else {
-        self.effectiveIndicatorView = self.indicatorView;
-    }
-}
-
-- (void)setEffectiveIndicatorView:(JGProgressHUDIndicatorView * _Nonnull)effectiveIndicatorView {
-    if (self.effectiveIndicatorView == effectiveIndicatorView) {
+        _indicatorViewAfterTransitioning = indicatorView;
         return;
     }
     
     [UIView performWithoutAnimation:^{
-        [self->_effectiveIndicatorView removeFromSuperview];
-        self->_effectiveIndicatorView = effectiveIndicatorView;
+        [self->_indicatorView removeFromSuperview];
+        self->_indicatorView = indicatorView;
         
         if (self.indicatorView != nil) {
-            [self.effectiveIndicatorView setUpForHUDStyle:self.style vibrancyEnabled:self.vibrancyEnabled];
-            [self.contentView addSubview:self.effectiveIndicatorView];
+            [self.indicatorView setUpForHUDStyle:self.style vibrancyEnabled:self.vibrancyEnabled];
+            [self.contentView addSubview:self.indicatorView];
         }
     }];
     
@@ -941,7 +929,7 @@ static UIViewAnimationOptions UIViewAnimationOptionsFromUIViewAnimationCurve(UIV
     
     _progress = progress;
     
-    [self.effectiveIndicatorView setProgress:progress animated:animated];
+    [self.indicatorView setProgress:progress animated:animated];
 }
 
 #pragma mark - Overrides
@@ -953,7 +941,7 @@ static UIViewAnimationOptions UIViewAnimationOptionsFromUIViewAnimationCurve(UIV
     }
     else {
         UIView *view = [super hitTest:point withEvent:event];
-        
+
         if (self.interactionType == JGProgressHUDInteractionTypeBlockAllTouches) {
             return view;
         }

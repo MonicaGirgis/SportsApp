@@ -17,9 +17,9 @@ struct Sport : Codable{
     
     enum  CodingKeys : String,CodingKey{
         case id = "idSport"
-        case name = "strSport"
+        case name = "strSport" //name
         case format = "strFormat"
-        case thumb = "strSportThumb"
+        case thumb = "strSportThumb" //strsportThumb
         case desc = "strSportDescription"
         case image = "strSportThumbGreen"
     }
