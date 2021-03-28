@@ -59,9 +59,11 @@ extension AllSportsViewController:UICollectionViewDataSource,UICollectionViewDel
         
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let leagueObject = self.storyboard?.instantiateViewController(withIdentifier: "leaguesVC")
-        self.navigationController?.pushViewController(leagueObject!, animated: true)
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "leaguesVC") as! LeaguesTableViewController
+        vc.sportSelected = sportArray.sports[indexPath.row].name
+        self.navigationController?.pushViewController(vc, animated: true)
     }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 7.0
     }

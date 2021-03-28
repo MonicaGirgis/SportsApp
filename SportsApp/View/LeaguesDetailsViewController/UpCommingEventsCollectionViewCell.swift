@@ -10,10 +10,10 @@ import UIKit
 
 class UpCommingEventsCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
-        eventView.layer.borderWidth = 3
-        eventView.layer.borderColor = UIColor(red:222/255, green:69/255, blue:0/255, alpha: 1).cgColor
-        eventView.layer.cornerRadius = 8
-        eventView.layer.cornerRadius = 8
+//        eventView.layer.borderWidth = 3
+//        eventView.layer.borderColor = UIColor(red:222/255, green:69/255, blue:0/255, alpha: 1).cgColor
+//        eventView.layer.cornerRadius = 8
+//        eventView.layer.cornerRadius = 8
         eventTimeLb.layer.borderWidth = 3
         eventTimeLb.layer.borderColor = UIColor(red:222/255, green:69/255, blue:0/255, alpha: 1).cgColor
         eventTimeLb.layer.cornerRadius = 4

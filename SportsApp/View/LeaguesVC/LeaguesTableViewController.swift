@@ -11,7 +11,7 @@ import SDWebImage
 
 class LeaguesTableViewController: UITableViewController {
     
-    var sportSelected : String = "Soccer"
+    var sportSelected : String?
     var leagues : [League] = []{
         didSet{
             fetchLeaguesDetailsData()
@@ -58,6 +58,15 @@ class LeaguesTableViewController: UITableViewController {
             }
         }
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showLeagueDetails" {
+            if let indexPath = self.tableView.indexPathForSelectedRow {
+                let controller = segue.destination as! LeaguesDetailssViewController
+                controller.leagueDetails = leaguesDetails[indexPath.row]
+            }
+        }
+    }
 }
 
 
@@ -87,7 +96,7 @@ extension LeaguesTableViewController{
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = storyboard?.instantiateViewController(withIdentifier: String(describing: LeaguesDetailssViewController.self)) as! LeaguesDetailssViewController
         vc.leagueDetails = leaguesDetails[indexPath.row]
-        present(vc, animated: true, completion: nil)
+        performSegue(withIdentifier: "showLeagueDetails", sender: self)
     }
 }
 

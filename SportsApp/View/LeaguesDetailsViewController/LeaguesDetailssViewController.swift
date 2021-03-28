@@ -11,13 +11,29 @@ import UIKit
 class LeaguesDetailssViewController: UIViewController {
     
     var leagueDetails : LeagueDetails?
-    
+    var events : [Events]?{
+        didSet{
+            tableView.reloadData()
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.tableFooterView = UIView()
+        fetchData()
     }
     
     @IBOutlet weak var tableView: UITableView!
+    
+    func fetchData(){
+        APICall<SportsNetworking>.fetchData(target: .getEvents(id: Int(leagueDetails?.idLeague ?? "") ?? 0), responseClass: EventsModel.self) { (result) in
+            switch result{
+            case .success(let response):
+                self.events = response?.events
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
 }
 
 
@@ -31,9 +47,11 @@ extension LeaguesDetailssViewController:UITableViewDataSource,UITableViewDelegat
         switch indexPath.row {
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: "leaguesCell", for: indexPath) as! firstCellinLeaguesDetailsVC
+            cell.configureCell(events: events ?? [])
             return cell
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell2", for: indexPath) as! secondCellinLeagesDetailsVC
+            cell.configureCell(events: events ?? [])
             return cell
         case 2:
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell3", for: indexPath) as! TeamsTableViewCell

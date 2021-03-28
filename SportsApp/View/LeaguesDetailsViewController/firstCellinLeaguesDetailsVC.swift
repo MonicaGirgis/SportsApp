@@ -17,24 +17,31 @@ class firstCellinLeaguesDetailsVC: UITableViewCell {
         collectionView.delegate = self
     }
     
-    var leagueDetail :LeagueDetails?
+    var events : [Events]?
     @IBOutlet weak var upCommingLbl: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
+    
+    func configureCell(events : [Events]){
+        self.events = events
+        collectionView.reloadData()
+    }
 
 }
 
 //MARK:- UICollectionViewDataSource,UICollectionViewDelegate
 extension firstCellinLeaguesDetailsVC:UICollectionViewDataSource,UICollectionViewDelegate{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return events?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "UpCommingEventsCollectionViewCell", for: indexPath) as! UpCommingEventsCollectionViewCell
-       // cell.configureCell(eventName: , eventdate: <#T##String#>, eventTime: <#T##String#>)
-        
+        cell.configureCell(eventName: events?[indexPath.item].strEvent ?? "", eventdate: events?[indexPath.row].dateEvent ?? "", eventTime: events?[indexPath.row].strTime ?? "")
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.frame.width , height: collectionView.frame.height)
+    }
     
 }

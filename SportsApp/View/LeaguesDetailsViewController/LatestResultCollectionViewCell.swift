@@ -10,10 +10,11 @@ import UIKit
 
 class LatestResultCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
-        latestResultView.layer.borderWidth = 3
-        latestResultView.layer.borderColor = UIColor(red:222/255, green:69/255, blue:0/255, alpha: 1).cgColor
-        latestResultView.layer.cornerRadius = 8
-        latestResultView.layer.cornerRadius = 8
+          //view
+//        latestResultView.layer.borderWidth = 3
+//        latestResultView.layer.borderColor = UIColor(red:222/255, green:69/255, blue:0/255, alpha: 1).cgColor
+//        latestResultView.layer.cornerRadius = 8
+//        latestResultView.layer.cornerRadius = 8
         //labels
         firstTeamNameLb.layer.borderWidth = 2
         firstTeamNameLb.layer.borderColor = UIColor(red:222/255, green:69/255, blue:0/255, alpha: 1).cgColor
@@ -49,19 +50,19 @@ class LatestResultCollectionViewCell: UICollectionViewCell {
     }
     
     @IBOutlet weak var latestResultView: UIView!
-    
     @IBOutlet weak var firstTeamNameLb: UILabel!
-    
     @IBOutlet weak var secondTeameNameLb: UILabel!
-    
-    
     @IBOutlet weak var firstTeamScoreLb: UILabel!
-    
     @IBOutlet weak var secondTeamScoreLab: UILabel!
-    
     @IBOutlet weak var dateLab: UILabel!
-    
-    
-    
     @IBOutlet weak var timeLab: UILabel!
+    
+    func configureCell(firstTeam : String, secondTeam : String, firstScore : String, secondScore : String, date : String, time : String){
+        firstTeamNameLb.text = firstTeam
+        secondTeameNameLb.text = secondTeam
+        firstTeamScoreLb.text = firstScore
+        secondTeamScoreLab.text = secondScore
+        dateLab.text = date
+        timeLab.text = time
+    }
 }
