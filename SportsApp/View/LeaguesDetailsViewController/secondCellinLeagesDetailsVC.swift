@@ -17,15 +17,12 @@ class secondCellinLeagesDetailsVC: UITableViewCell {
         collectionView.delegate = self
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
 
     @IBOutlet weak var matchesLbl: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
 }
+
+
 
 extension secondCellinLeagesDetailsVC:UICollectionViewDataSource,UICollectionViewDelegate{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -42,6 +39,8 @@ extension secondCellinLeagesDetailsVC:UICollectionViewDataSource,UICollectionVie
         cell.timeLab.text = "8:9 am"
         return cell
     }
-    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.frame.width , height: collectionView.frame.height)
+    }
     
 }

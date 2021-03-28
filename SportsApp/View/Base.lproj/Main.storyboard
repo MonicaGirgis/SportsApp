@@ -110,10 +110,10 @@
             </objects>
             <point key="canvasLocation" x="1124" y="266.71664167916043"/>
         </scene>
-        <!--Leagues Detailss View Controller-->
+        <!--League Details-->
         <scene sceneID="Emw-rK-ryJ">
             <objects>
-                <viewController id="jvv-S5-tC8" customClass="LeaguesDetailssViewController" customModule="SportsApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LeaguesDetailssViewController" id="jvv-S5-tC8" customClass="LeaguesDetailssViewController" customModule="SportsApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Z6k-o7-O0h">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -129,7 +129,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="223.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="dbz-uZ-QHY">
+                                                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="dbz-uZ-QHY">
                                                     <rect key="frame" x="0.0" y="43" width="375" height="160.5"/>
                                                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
@@ -247,7 +247,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="195.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="j7g-ac-sRu">
+                                                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="j7g-ac-sRu">
                                                     <rect key="frame" x="0.0" y="44" width="375" height="141"/>
                                                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
@@ -402,7 +402,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="122.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="z6B-UL-zt5">
+                                                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="z6B-UL-zt5">
                                                     <rect key="frame" x="0.0" y="34" width="375" height="78.5"/>
                                                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
@@ -483,6 +483,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="WAn-qM-eAD"/>
                     </view>
+                    <navigationItem key="navigationItem" title="League Details" id="bHQ-8r-rnT">
+                        <barButtonItem key="rightBarButtonItem" title="Item" id="gqq-R1-uBA"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="m0N-zk-4ch" id="meZ-Je-7M4"/>
                     </connections>
@@ -720,6 +723,18 @@
                                     <wkPreferences key="preferences"/>
                                 </wkWebViewConfiguration>
                             </wkWebView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qWI-Xg-Shq">
+                                <rect key="frame" x="329" y="36" width="30" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="Lf1-G8-wWj"/>
+                                    <constraint firstAttribute="width" constant="30" id="cgw-47-kEa"/>
+                                </constraints>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" image="close-button"/>
+                                <connections>
+                                    <action selector="closeButton:" destination="vhd-1x-iip" eventType="touchUpInside" id="K8E-cX-amN"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -727,10 +742,13 @@
                             <constraint firstItem="RcJ-2F-Aqs" firstAttribute="bottom" secondItem="7oI-eS-FhU" secondAttribute="bottom" id="ZTm-Ee-4tY"/>
                             <constraint firstItem="7oI-eS-FhU" firstAttribute="top" secondItem="RcJ-2F-Aqs" secondAttribute="top" id="ewi-hk-CkR"/>
                             <constraint firstItem="RcJ-2F-Aqs" firstAttribute="trailing" secondItem="7oI-eS-FhU" secondAttribute="trailing" id="kzE-7B-H6d"/>
+                            <constraint firstItem="RcJ-2F-Aqs" firstAttribute="trailing" secondItem="qWI-Xg-Shq" secondAttribute="trailing" constant="16" id="nqC-u9-yLe"/>
+                            <constraint firstItem="qWI-Xg-Shq" firstAttribute="top" secondItem="RcJ-2F-Aqs" secondAttribute="top" constant="16" id="og1-lG-d0s"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="RcJ-2F-Aqs"/>
                     </view>
                     <connections>
+                        <outlet property="closeBtn" destination="qWI-Xg-Shq" id="wt3-xT-hbd"/>
                         <outlet property="webView" destination="7oI-eS-FhU" id="ulE-ff-BaU"/>
                     </connections>
                 </viewController>
@@ -803,6 +821,7 @@
     </scenes>
     <resources>
         <image name="TheHobbit" width="300" height="168"/>
+        <image name="close-button" width="512" height="512"/>
         <image name="youtube-dark" width="1125" height="738"/>
     </resources>
 </document>

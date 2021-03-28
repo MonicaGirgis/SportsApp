@@ -9,16 +9,23 @@
 import UIKit
 import WebKit
 
-class webViewController: UIViewController {
+class webViewController: UIViewController, WKUIDelegate {
 
     
+    @IBOutlet weak var closeBtn: UIButton!
     @IBOutlet weak var webView: WKWebView!
     var youtubeURL : String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        guard let url  = URL(string: youtubeURL ?? "") else {return}
+        webView.uiDelegate = self
+        webView.translatesAutoresizingMaskIntoConstraints = false
+        closeBtn.imageView?.image = #imageLiteral(resourceName: "close-button").withRenderingMode(.alwaysTemplate)
+        guard let url  = URL(string: "https://" + youtubeURL!) else {return}
         webView.load(URLRequest(url: url))
-        //UIApplication.shared.
     }
 
+    @IBAction func closeButton(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
 }

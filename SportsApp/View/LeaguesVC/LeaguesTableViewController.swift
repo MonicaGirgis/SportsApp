@@ -83,6 +83,12 @@ extension LeaguesTableViewController{
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 120
     }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = storyboard?.instantiateViewController(withIdentifier: String(describing: LeaguesDetailssViewController.self)) as! LeaguesDetailssViewController
+        vc.leagueDetails = leaguesDetails[indexPath.row]
+        present(vc, animated: true, completion: nil)
+    }
 }
 
 extension LeaguesTableViewController : LeaguesCustomTableViewCellDelegate{

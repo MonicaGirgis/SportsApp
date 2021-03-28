@@ -17,16 +17,13 @@ class firstCellinLeaguesDetailsVC: UITableViewCell {
         collectionView.delegate = self
     }
     
-
+    var leagueDetail :LeagueDetails?
     @IBOutlet weak var upCommingLbl: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
 
 }
+
+//MARK:- UICollectionViewDataSource,UICollectionViewDelegate
 extension firstCellinLeaguesDetailsVC:UICollectionViewDataSource,UICollectionViewDelegate{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 10
@@ -34,9 +31,7 @@ extension firstCellinLeaguesDetailsVC:UICollectionViewDataSource,UICollectionVie
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "UpCommingEventsCollectionViewCell", for: indexPath) as! UpCommingEventsCollectionViewCell
-        cell.eventNameLb.text = " Match"
-        cell.eventdataLb.text = " 2022-3-31"
-        cell.eventTimeLb.text = " 6:45"
+       // cell.configureCell(eventName: , eventdate: <#T##String#>, eventTime: <#T##String#>)
         
         return cell
     }

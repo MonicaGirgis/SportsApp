@@ -9,27 +9,19 @@
 import UIKit
 
 class LeaguesDetailssViewController: UIViewController {
-
+    
+    var leagueDetails : LeagueDetails?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.tableFooterView = UIView()
-
-
     }
     
-
     @IBOutlet weak var tableView: UITableView!
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
+
+
+// MARK:- UITableViewDataSource,UITableViewDelegate
 extension LeaguesDetailssViewController:UITableViewDataSource,UITableViewDelegate{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 3
@@ -51,5 +43,7 @@ extension LeaguesDetailssViewController:UITableViewDataSource,UITableViewDelegat
         }
     }
     
-    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return tableView.frame.height / 3
+    }
 }

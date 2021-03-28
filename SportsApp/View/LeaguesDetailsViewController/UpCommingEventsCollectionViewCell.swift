@@ -26,15 +26,16 @@ class UpCommingEventsCollectionViewCell: UICollectionViewCell {
         eventNameLb.layer.borderColor = UIColor(red:222/255, green:69/255, blue:0/255, alpha: 1).cgColor
         eventNameLb.layer.cornerRadius = 4
         eventNameLb.layer.cornerRadius = 4
-        
-        
     }
     
     @IBOutlet weak var eventView: UIView!
-    
     @IBOutlet weak var eventNameLb: UILabel!
-    
     @IBOutlet weak var eventdataLb: UILabel!
-    
     @IBOutlet weak var eventTimeLb: UILabel!
+    
+    func configureCell(eventName : String, eventdate : String , eventTime:String){
+        eventNameLb.text = eventName
+        eventdataLb.text = eventdate
+        eventTimeLb.text = eventTime
+    }
 }
