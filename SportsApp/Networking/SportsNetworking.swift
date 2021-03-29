@@ -13,6 +13,7 @@ enum SportsNetworking{
     case getSeasonsInLeague
     case getLeagueDetails(id: Int)
     case getEvents(id: Int)
+    case getTeamsInLeague
 }
 
 extension SportsNetworking : TargetType{
@@ -35,6 +36,10 @@ extension SportsNetworking : TargetType{
             return "lookupleague.php?id=\(id)"
         case .getEvents(let id):
             return "eventspastleague.php?id=\(id)"
+        case .getTeamsInLeague:
+            return "search_all_teams.php?s=Soccer&c=Spain"
+            //https://www.thesportsdb.com/api/v1/json/1/lookupleague.php?id=4346
+            //https://www.thesportsdb.com/api/v1/json/1/lookupleague.php?id=
         }
     }
     

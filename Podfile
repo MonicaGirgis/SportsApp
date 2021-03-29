@@ -14,5 +14,6 @@ target 'SportsApp' do
 pod 'SDWebImage', '~> 5.0'
 pod 'JGProgressHUD'
 pod 'Alamofire', '~> 4.0'
+pod 'ReachabilitySwift'
 
 end
