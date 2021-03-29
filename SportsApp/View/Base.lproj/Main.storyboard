@@ -602,13 +602,6 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hYe-IS-TK7">
-                                <rect key="frame" x="4" y="20" width="30" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="SYf-FS-20x"/>
-                                </constraints>
-                                <state key="normal" title="&gt;"/>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="leaguess" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DMk-w2-49H">
                                 <rect key="frame" x="124" y="321" width="235" height="34"/>
                                 <constraints>
@@ -620,17 +613,15 @@
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="jG7-0g-RFI" firstAttribute="leading" secondItem="v0D-fb-gcz" secondAttribute="trailing" constant="25" id="0Qm-5h-UDI"/>
                             <constraint firstItem="n8c-lU-G7O" firstAttribute="bottom" secondItem="AtC-ye-uXG" secondAttribute="bottom" constant="7" id="0av-Hx-lfU"/>
                             <constraint firstItem="v0D-fb-gcz" firstAttribute="width" secondItem="Vml-BQ-hFv" secondAttribute="width" id="1KL-nf-eMe"/>
                             <constraint firstItem="DMk-w2-49H" firstAttribute="top" secondItem="79g-VD-L1a" secondAttribute="bottom" constant="21" id="1xK-Xy-R1s"/>
-                            <constraint firstItem="hYe-IS-TK7" firstAttribute="top" secondItem="n8c-lU-G7O" secondAttribute="top" id="2dg-zp-doS"/>
-                            <constraint firstItem="gI3-lv-kQ3" firstAttribute="leading" secondItem="hYe-IS-TK7" secondAttribute="trailing" constant="6" id="6jz-nO-6bE"/>
                             <constraint firstItem="Vml-BQ-hFv" firstAttribute="width" secondItem="yvE-Em-SCG" secondAttribute="width" id="7Ze-NU-x1D"/>
                             <constraint firstItem="G7f-YA-P4m" firstAttribute="top" secondItem="jG7-0g-RFI" secondAttribute="bottom" constant="7" id="7bj-QR-jW7"/>
                             <constraint firstItem="CBz-x6-nvI" firstAttribute="top" secondItem="gI3-lv-kQ3" secondAttribute="bottom" constant="122" id="84d-rS-1qH"/>
-                            <constraint firstItem="hYe-IS-TK7" firstAttribute="leading" secondItem="n8c-lU-G7O" secondAttribute="leading" constant="4" id="8IV-0t-TiC"/>
                             <constraint firstItem="juk-Yl-1AY" firstAttribute="top" secondItem="DMk-w2-49H" secondAttribute="bottom" constant="7" id="8ib-Ji-led"/>
                             <constraint firstItem="Vml-BQ-hFv" firstAttribute="top" secondItem="yvE-Em-SCG" secondAttribute="bottom" constant="6" id="8zW-HH-Xn3"/>
                             <constraint firstItem="DMk-w2-49H" firstAttribute="leading" secondItem="CBz-x6-nvI" secondAttribute="trailing" constant="28" id="BH6-BH-R1B"/>
@@ -663,6 +654,9 @@
                             <constraint firstItem="v0D-fb-gcz" firstAttribute="top" secondItem="Vml-BQ-hFv" secondAttribute="bottom" constant="7" id="zta-b0-5ba"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="n8c-lU-G7O"/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="AeB-Ew-vwf" appends="YES" id="F70-Jd-FsN"/>
+                        </connections>
                     </view>
                     <connections>
                         <outlet property="countryLab" destination="juk-Yl-1AY" id="NbC-cd-AGI"/>
@@ -676,6 +670,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uPn-Td-llv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="AeB-Ew-vwf"/>
             </objects>
             <point key="canvasLocation" x="2615.1999999999998" y="266.71664167916043"/>
         </scene>
