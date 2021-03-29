@@ -11,18 +11,12 @@ import Reachability
 import CoreData
 class FavouriteSportsViewController: UIViewController{
    var leagueEntityArray:[LeagueEntity]? = []
-    var leagueObj:LeagueDetails?
     var leagueArray:[LeagueDetails]? = [LeagueDetails]()
-    var leagueEnttiObj:LeagueEntity?
     var reachability:Reachability?
     var appDelegate:AppDelegate?
     let dispatch:DispatchGroup? = DispatchGroup()
     
     var manageContext:NSManagedObjectContext?
-  /*  func passLeagueId(leage: LeagueEntity) {
-        leagueEntityArray?.append(leage)
-       leagueEnttiObj = leage
-    }*/
     var leagueDetailsObj = LeaguesDetailssViewController()
 
     override func viewDidLoad() {
@@ -66,8 +60,6 @@ class FavouriteSportsViewController: UIViewController{
         } catch {
             print("Unable to start notifier")
         }
-      // fetchSavedData2()
-        //fetchSavedData()
         dispatch?.notify(queue: .main){
             self.tableView.reloadData()
         }
@@ -78,53 +70,19 @@ class FavouriteSportsViewController: UIViewController{
             APICall<SportsNetworking>.fetchData(target: .getLeagueDetails(id: leagueEntityArray![i].value(forKey: "leagueIdd") as! Int ), responseClass: LeagueDetailsData.self) { (result) in
             switch result{
             case .success(let response):
-                print("Our Response is \(response)")
-               // self.leagueArray?.append(response?.details)
                 self.leagueArray = self.leagueArray! + (response?.details)!
-                print("After fixxing \(self.leagueArray)")
                 self.tableView.reloadData()
                 self.dispatch?.leave()
-               // self.tableView.reloadData()
             case .failure(let error):
                 print(error)
             }
         }
         }
     }
-  /*  func fetchSavedData2(){
-        //guard let count = leagueEntityArray?.count else {return}
-       for i in 0 ..< 5{
-       // guard let id2 = leagueEnttiObj?.leagueIdd else {return}
-            APICall<SportsNetworking>.fetchData(target: .getLeagueDetails(id: Int(leagueEntityArray![i].leagueIdd) ), responseClass: LeagueDetails.self) { (result) in
-            switch result{
-            case .success(let response):
-                print("Our Response is \(response)")
-                self.leagueObj = response
-                self.leagueArray?.append(self.leagueObj!)
-                self.tableView.reloadData()
-            case .failure(let error):
-                print("error = \(error)")
-            }
-        }
-        }
-    } */
-    
-    
-
     @IBOutlet weak var tableView: UITableView!
-    
-
 }
 extension FavouriteSportsViewController:UITableViewDataSource,UITableViewDelegate{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-       // print("League entity Array \(leagueEntityArray?.count)")
-       // return leagueEntityArray?.count ?? 88
-        //return leaguesArray?.count
-        //print("League Array \(leagueArray?.count)")
-       // return (leagueArray?.count)!
-       // print("Count \(leagueEntityArray?.count)")
-       // return (leagueEntityArray?.count)!
-        print("aa \((leagueArray?.count))")
         return (leagueArray!.count)
     }
     
@@ -132,15 +90,14 @@ extension FavouriteSportsViewController:UITableViewDataSource,UITableViewDelegat
         let cell = tableView.dequeueReusableCell(withIdentifier: "FavouriteSportsCustomTableViewCell", for: indexPath) as! FavouriteSportsCustomTableViewCell
         cell.favouriteSportImg.sd_setImage(with: URL(string:(leagueArray?[indexPath.row].badge)!), placeholderImage: UIImage(named: "Favourite"))
         cell.favouriteSportNameLbl.text = leagueArray?[indexPath.row].name
-        cell.favouriteSportLabel.text = "Amazing Sport"
-        
+        cell.delegate = self
+        cell.leagueDetail = leagueArray?[indexPath.row]
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if reachability!.connection == .wifi {
         let cell = tableView.cellForRow(at: indexPath)
         tableView.deselectRow(at: indexPath, animated: true)
-        
         performSegue(withIdentifier: "seguing", sender: cell)
         }
          else{
@@ -151,6 +108,22 @@ extension FavouriteSportsViewController:UITableViewDataSource,UITableViewDelegat
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 120
+    } 
+}
+
+// MARK:- LeaguesCustomTableViewCellDelegate
+extension FavouriteSportsViewController : LeaguesCustomTableViewCellDelegate{
+    func didTapYoutubeButton(url: String) {
+        let vc = storyboard?.instantiateViewController(withIdentifier: String(describing: webViewController.self)) as! webViewController
+        vc.youtubeURL = url
+        present(vc, animated: true, completion: nil)
+    }
+    
+    func showError() {
+        let alert = UIAlertController(title: "Youtube Channel Not Found", message: "", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+        alert.addAction(okAction)
+        present(alert, animated: true, completion: nil)
     }
     
     

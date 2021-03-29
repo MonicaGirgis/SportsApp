@@ -9,7 +9,9 @@
 import UIKit
 
 class FavouriteSportsCustomTableViewCell: UITableViewCell {
-
+    
+    weak var delegate : LeaguesCustomTableViewCellDelegate?
+    var leagueDetail : LeagueDetails?
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -26,18 +28,15 @@ class FavouriteSportsCustomTableViewCell: UITableViewCell {
         favouriteSportView.layer.cornerRadius = 8
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
+    @IBAction func gotoYoutube(_ sender: Any) {
+        guard let url = leagueDetail?.youtube, !url.isEmpty else {
+            delegate?.showError()
+            return
+        }
+        delegate?.didTapYoutubeButton(url: url)
     }
-
+    
     @IBOutlet weak var favouriteSportView: UIView!
-    
     @IBOutlet weak var favouriteSportImg: UIImageView!
-    
     @IBOutlet weak var favouriteSportNameLbl: UILabel!
-    
-    
-    @IBOutlet weak var favouriteSportLabel: UILabel!
-    
 }
