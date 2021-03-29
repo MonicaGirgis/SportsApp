@@ -8,7 +8,7 @@
 
 import UIKit
 import SDWebImage
-class TeamDetailsViewController: UIViewController {
+class TeamDetailsViewController: UIViewController,UIGestureRecognizerDelegate {
     var teamObj:Teams?
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,10 +22,18 @@ class TeamDetailsViewController: UIViewController {
         leagueImg.sd_setImage(with: URL(string: stadiumImgUrl), placeholderImage: UIImage(named: "TheHobbit"))
         guard let imgUrl = teamObj?.strTeamBadge else {return}
          teamImg.sd_setImage(with: URL(string: imgUrl), placeholderImage: UIImage(named: "Favourite"))
-        
-        //imageView.sd_setImage(with: URL(string: "http://www.domain.com/path/to/image.jpg"), placeholderImage: UIImage(named: "placeholder.png"))
-        
+        self.view.isUserInteractionEnabled = true
+
+        let guesture = UISwipeGestureRecognizer(target: self, action: #selector(swipe))
+        guesture.delegate = self 
+        guesture.direction = .down
+        self.view.addGestureRecognizer(guesture)
+
     }
+    @objc func swipe(){
+        dismiss(animated: true, completion: nil)
+    }
+    
     
     @IBOutlet weak var leagueNamesLbl: UILabel!
     @IBOutlet weak var teamNameLbl: UILabel!
@@ -38,4 +46,8 @@ class TeamDetailsViewController: UIViewController {
     @IBOutlet weak var countryLab: UILabel!
     
     @IBOutlet weak var detailedDescLab: UILabel!
+    
+    
+   
+    
 }
