@@ -36,11 +36,10 @@ class LeaguesDetailssViewController: UIViewController {
         manageContext = appDelegate?.persistentContainer.viewContext
         //bar button item
         let logoutBarButtonItem = UIBarButtonItem(title: "Favo", style: .done, target: self, action: #selector(Saving))
+        //logoutBarButtonItem.image = UIImage(named: "<#T##String#>")
         self.navigationItem.rightBarButtonItem  = logoutBarButtonItem
     }
-    
-    
-    
+
     @IBOutlet weak var tableView: UITableView!
     
     func fetchEventsData(){

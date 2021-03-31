@@ -70,6 +70,12 @@ class FavouriteSportsViewController: UIViewController{
             }
         }
     }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "seguing",let index = sender as? Int{
+            let vc = segue.destination as? LeaguesDetailssViewController
+            vc?.leagueDetails = leagueArray?[index]
+        }
+    }
     @IBOutlet weak var tableView: UITableView!
 }
 extension FavouriteSportsViewController:UITableViewDataSource,UITableViewDelegate{
@@ -87,9 +93,7 @@ extension FavouriteSportsViewController:UITableViewDataSource,UITableViewDelegat
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if reachability!.connection == .wifi {
-            let vc = storyboard?.instantiateViewController(withIdentifier: String(describing: LeaguesDetailssViewController.self)) as! LeaguesDetailssViewController
-            vc.leagueDetails = leagueArray?[indexPath.row]
-            performSegue(withIdentifier: "seguing", sender: self)
+            performSegue(withIdentifier: "seguing", sender: indexPath.row)
         }
         else{
             let alert = UIAlertController(title: "Info", message: "You cann't go over as you are offline", preferredStyle: .alert)
