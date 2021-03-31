@@ -8,7 +8,7 @@
 
 import Foundation
 struct TeamModel : Codable {
-    let teams : [Teams]?
+    let teams : [Team]?
     
     enum CodingKeys: String, CodingKey {
         
@@ -16,7 +16,7 @@ struct TeamModel : Codable {
     }
     
   }
-struct Teams : Codable {
+struct Team : Codable {
     let idTeam : String?
     let idSoccerXML : String?
     let idAPIfootball : String?
@@ -147,7 +147,4 @@ struct Teams : Codable {
         case strYoutube = "strYoutube"
         case strLocked = "strLocked"
     }
-    
-   
-    
 }

@@ -10,7 +10,7 @@ import UIKit
 import Reachability
 import CoreData
 class FavouriteSportsViewController: UIViewController{
-   var leagueEntityArray:[LeagueEntity]? = []
+    var leagueEntityArray:[LeagueEntity]? = []
     var leagueArray:[LeagueDetails]? = [LeagueDetails]()
     var reachability:Reachability?
     var appDelegate:AppDelegate?
@@ -18,16 +18,12 @@ class FavouriteSportsViewController: UIViewController{
     
     var manageContext:NSManagedObjectContext?
     var leagueDetailsObj = LeaguesDetailssViewController()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-      //  dispatch = DispatchGroup()
-       // leagueDetailsObj.ref = self
         reachability = Reachability()
         appDelegate = UIApplication.shared.delegate as! AppDelegate
         manageContext = appDelegate?.persistentContainer.viewContext
-       // fetchSavedData()
-        
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
@@ -35,20 +31,15 @@ class FavouriteSportsViewController: UIViewController{
         
         reachability!.whenReachable = { reachability in
             if reachability.connection == .wifi {
-                print("Reachable via WiFi")
                 let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "LeagueEntity")
                 do{
                     self.leagueEntityArray =  try self.manageContext?.fetch(fetchRequest) as! [LeagueEntity]
-                   self.leagueArray = []
+                    self.leagueArray = []
                     self.fetchSavedData()
-                   print("League EntityArray = \(self.leagueEntityArray)")
                 }
                 catch let fetchError as NSError{
                     print(fetchError)
                 }
-                
-            } else {
-                print("Reachable via Cellular")
             }
         }
         reachability!.whenUnreachable = { _ in
@@ -68,15 +59,15 @@ class FavouriteSportsViewController: UIViewController{
         for i in  0 ..< leagueEntityArray!.count{
             dispatch?.enter()
             APICall<SportsNetworking>.fetchData(target: .getLeagueDetails(id: leagueEntityArray![i].value(forKey: "leagueIdd") as! Int ), responseClass: LeagueDetailsData.self) { (result) in
-            switch result{
-            case .success(let response):
-                self.leagueArray = self.leagueArray! + (response?.details)!
-                self.tableView.reloadData()
-                self.dispatch?.leave()
-            case .failure(let error):
-                print(error)
+                switch result{
+                case .success(let response):
+                    self.leagueArray = self.leagueArray! + (response?.details)!
+                    self.tableView.reloadData()
+                    self.dispatch?.leave()
+                case .failure(let error):
+                    print(error)
+                }
             }
-        }
         }
     }
     @IBOutlet weak var tableView: UITableView!
@@ -88,7 +79,7 @@ extension FavouriteSportsViewController:UITableViewDataSource,UITableViewDelegat
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "FavouriteSportsCustomTableViewCell", for: indexPath) as! FavouriteSportsCustomTableViewCell
-        cell.favouriteSportImg.sd_setImage(with: URL(string:(leagueArray?[indexPath.row].badge)!), placeholderImage: UIImage(named: "Favourite"))
+        cell.favouriteSportImg.sd_setImage(with: URL(string:(leagueArray?[indexPath.row].badge)!), placeholderImage: UIImage(named: "not-found"))
         cell.favouriteSportNameLbl.text = leagueArray?[indexPath.row].name
         cell.delegate = self
         cell.leagueDetail = leagueArray?[indexPath.row]
@@ -96,11 +87,11 @@ extension FavouriteSportsViewController:UITableViewDataSource,UITableViewDelegat
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if reachability!.connection == .wifi {
-        let cell = tableView.cellForRow(at: indexPath)
-        tableView.deselectRow(at: indexPath, animated: true)
-        performSegue(withIdentifier: "seguing", sender: cell)
+            let vc = storyboard?.instantiateViewController(withIdentifier: String(describing: LeaguesDetailssViewController.self)) as! LeaguesDetailssViewController
+            vc.leagueDetails = leagueArray?[indexPath.row]
+            performSegue(withIdentifier: "seguing", sender: self)
         }
-         else{
+        else{
             let alert = UIAlertController(title: "Info", message: "You cann't go over as you are offline", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
             self.present(alert, animated: true, completion: nil)

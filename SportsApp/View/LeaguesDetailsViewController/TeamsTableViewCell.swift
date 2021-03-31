@@ -9,7 +9,7 @@
 import UIKit
 import SDWebImage
 class TeamsTableViewCell: UITableViewCell {
-    var teams:[Teams]?
+    var teams:[Team]?
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -19,7 +19,7 @@ class TeamsTableViewCell: UITableViewCell {
 
     @IBOutlet weak var teamsLbl: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
-    func configureCell(teams:[Teams]){
+    func configureCell(teams:[Team]){
         self.teams = teams
         self.collectionView.reloadData()
     }
@@ -42,8 +42,9 @@ extension TeamsTableViewCell:UICollectionViewDelegate,UICollectionViewDataSource
         let vc = storyboard.instantiateViewController(withIdentifier: "teamsVc") as! TeamDetailsViewController
         vc.teamObj = teams![indexPath.row]
         let currentControoler = self.getCurrentViewControoler()
-        currentControoler!.present(vc,animated:false,completion:nil)
+        currentControoler!.present(vc,animated:true,completion:nil)
     }
+    
     func getCurrentViewControoler()->UIViewController?{
         if let rootViewController = UIApplication.shared.keyWindow?.rootViewController{
             var currentControllerr:UIViewController! = rootViewController

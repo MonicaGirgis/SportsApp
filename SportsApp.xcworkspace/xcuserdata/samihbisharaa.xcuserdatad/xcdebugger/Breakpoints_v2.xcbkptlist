@@ -9,12 +9,12 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "SportsApp/Networking/TeamDetailsViewController.swift"
-            timestampString = "638754798.7595381"
+            filePath = "SportsApp/View/LeaguesDetailsViewController/LeaguesDetailssViewController.swift"
+            timestampString = "638883540.826331"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "13"
-            endingLineNumber = "13"
+            startingLineNumber = "30"
+            endingLineNumber = "30"
             landmarkName = "viewDidLoad()"
             landmarkType = "7">
          </BreakpointContent>
@@ -25,76 +25,14 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "SportsApp/Networking/TeamDetailsViewController.swift"
-            timestampString = "638754798.760317"
+            filePath = "SportsApp/View/FavouriteSports/FavouriteSportsViewController.swift"
+            timestampString = "638883540.8275681"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "12"
-            endingLineNumber = "12"
-            landmarkName = "TeamDetailsViewController"
-            landmarkType = "3">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "SportsApp.TeamDetailsViewController.teamObj.getter : Swift.Optional&lt;SportsApp.Teams&gt;"
-                  moduleName = "SportsApp"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/samihbisharaa/Desktop/SportsApp/SportsApp/Networking/TeamDetailsViewController.swift"
-                  timestampString = "638752348.695922"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "12"
-                  endingLineNumber = "12"
-                  offsetFromSymbolStart = "4048">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "SportsApp.TeamDetailsViewController.teamObj.setter : Swift.Optional&lt;SportsApp.Teams&gt;"
-                  moduleName = "SportsApp"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/samihbisharaa/Desktop/SportsApp/SportsApp/Networking/TeamDetailsViewController.swift"
-                  timestampString = "638752348.701136"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "12"
-                  endingLineNumber = "12"
-                  offsetFromSymbolStart = "4166">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "SportsApp.TeamDetailsViewController.init(nibName: Swift.Optional&lt;Swift.String&gt;, bundle: Swift.Optional&lt;__C.NSBundle&gt;) -&gt; SportsApp.TeamDetailsViewController"
-                  moduleName = "SportsApp"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/samihbisharaa/Desktop/SportsApp/SportsApp/Networking/TeamDetailsViewController.swift"
-                  timestampString = "638752348.706298"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "12"
-                  endingLineNumber = "12"
-                  offsetFromSymbolStart = "57">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "SportsApp.TeamDetailsViewController.init(coder: __C.NSCoder) -&gt; Swift.Optional&lt;SportsApp.TeamDetailsViewController&gt;"
-                  moduleName = "SportsApp"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/samihbisharaa/Desktop/SportsApp/SportsApp/Networking/TeamDetailsViewController.swift"
-                  timestampString = "638752348.714331"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "12"
-                  endingLineNumber = "12"
-                  offsetFromSymbolStart = "50">
-               </Location>
-            </Locations>
+            startingLineNumber = "92"
+            endingLineNumber = "92"
+            landmarkName = "tableView(_:didSelectRowAt:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

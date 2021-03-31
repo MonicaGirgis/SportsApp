@@ -15,43 +15,70 @@ class LeaguesDetailssViewController: UIViewController {
     var team1:NSManagedObject?
     var isFavourable:Bool?
     var ref:passingData?
-    var teams:[Teams]?{
+    var teams:[Team]?{
         didSet{
             self.tableView.reloadData()
         }
     }
     var leagueDetails : LeagueDetails?
+    var id : Int?
     var events : [Events]?{
         didSet{
             fetchTeamInLeague()
         }
     }
     override func viewDidLoad() {
-        isFavourable = true
         super.viewDidLoad()
+        isFavourable = true
         tableView.tableFooterView = UIView()
-        fetchLeagueData()
+        fetchEventsData()
         appDelegate = UIApplication.shared.delegate as! AppDelegate
         manageContext = appDelegate?.persistentContainer.viewContext
         //bar button item
         let logoutBarButtonItem = UIBarButtonItem(title: "Favo", style: .done, target: self, action: #selector(Saving))
         self.navigationItem.rightBarButtonItem  = logoutBarButtonItem
     }
+    
+    
+    
+    @IBOutlet weak var tableView: UITableView!
+    
+    func fetchEventsData(){
+        APICall<SportsNetworking>.fetchData(target: .getEvents(id: Int(leagueDetails?.idLeague ?? "") ?? 0), responseClass: EventsModel.self) { (result) in
+            switch result{
+            case .success(let response):
+                self.events = response?.events
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    func fetchTeamInLeague(){
+        APICall<SportsNetworking>.fetchData(target: .getTeamsInLeague(id : Int(leagueDetails?.idLeague ?? "") ?? 0), responseClass: TeamModel.self) { (result) in
+            switch result{
+            case .success(let value):
+                self.teams = value?.teams
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
     @objc func Saving(){
         if(isFavourable!){
-        let Entity = NSEntityDescription.entity(forEntityName: "LeagueEntity", in: manageContext!)
-        team1 = NSManagedObject(entity: Entity!, insertInto: manageContext)
+            let Entity = NSEntityDescription.entity(forEntityName: "LeagueEntity", in: manageContext!)
+            team1 = NSManagedObject(entity: Entity!, insertInto: manageContext)
             team1?.setValue(Int((leagueDetails?.idLeague)!), forKey: "leagueIdd")
-        do{
-            try manageContext?.save()
-            print("Data Saved")
-            print("Team Data \(team1)")
-            isFavourable = false
-           // ref?.passLeagueId(leage: team1 as! LeagueEntity)
-        }
-        catch let savingError as NSError{
-            print(savingError)
-        }
+            do{
+                try manageContext?.save()
+                print("Data Saved")
+                print("Team Data \(team1)")
+                isFavourable = false
+                // ref?.passLeagueId(leage: team1 as! LeagueEntity)
+            }
+            catch let savingError as NSError{
+                print(savingError)
+            }
         }
         else{
             manageContext?.delete(team1!)
@@ -64,33 +91,7 @@ class LeaguesDetailssViewController: UIViewController {
                 print(deletError)
             }
         }
-        
     }
-    
-    @IBOutlet weak var tableView: UITableView!
-    
-    func fetchLeagueData(){
-        APICall<SportsNetworking>.fetchData(target: .getEvents(id: Int(leagueDetails?.idLeague ?? "") ?? 0), responseClass: EventsModel.self) { (result) in
-            switch result{
-            case .success(let response):
-                self.events = response?.events
-            case .failure(let error):
-                print(error)
-            }
-        }
-    }
-   func fetchTeamInLeague(){
-    APICall<SportsNetworking>.fetchData(target: .getTeamsInLeague, responseClass: TeamModel.self) { (result) in
-        switch result{
-        case .success(let value):
-            self.teams = value?.teams
-        case .failure(let error):
-            print(error)
-        }
-    }
-    }
-    
-    
 }
 
 

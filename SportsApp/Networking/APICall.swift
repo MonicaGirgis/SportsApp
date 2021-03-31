@@ -28,7 +28,6 @@ class APICall<T: TargetType>{
                 return
             }
             completion(.success(responseObj))
-            //completion(responseObj)
         }
     }
 }
