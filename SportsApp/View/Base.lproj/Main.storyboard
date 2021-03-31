@@ -483,8 +483,16 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="WAn-qM-eAD"/>
                     </view>
-                    <navigationItem key="navigationItem" title="League Details" id="bHQ-8r-rnT"/>
+                    <navigationItem key="navigationItem" title="League Details" id="bHQ-8r-rnT">
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="like" id="eKb-GH-aDs">
+                            <color key="tintColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="favoriteBtn:" destination="jvv-S5-tC8" id="rfe-kZ-xpl"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
+                        <outlet property="favoriteBtnOutlet" destination="eKb-GH-aDs" id="G5B-JU-FVh"/>
                         <outlet property="tableView" destination="m0N-zk-4ch" id="meZ-Je-7M4"/>
                     </connections>
                 </viewController>
@@ -983,6 +991,7 @@
         <image name="JourneyToTheCenterOfEarth" width="100" height="100"/>
         <image name="TheHobbit" width="300" height="168"/>
         <image name="close-button" width="512" height="512"/>
+        <image name="like" width="32" height="32"/>
         <image name="youtube-dark" width="1125" height="738"/>
     </resources>
     <inferredMetricsTieBreakers>
