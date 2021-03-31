@@ -100,14 +100,24 @@ class LeaguesDetailssViewController: UIViewController {
     }
     
     func deleteFromCoreData(){
-        manageContext?.delete(team1 ?? NSManagedObject())
-        do{
-            try manageContext?.save()
-            print("Data Deleted")
-        }catch let error{
-            print(error.localizedDescription)
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "LeagueEntity")
+        
+            for l in leaguesArray!{
+                if l.leagueIdd == Int64((leagueDetails?.idLeague)!){
+                    manageContext?.delete(l)
+                    
+                    do{
+                       try manageContext?.save()
+                    }catch let error{
+                        print(error)
+                    }
+                }
+            }
+            
         }
-    }
+       
+    
+    
     
     func checkItemInsideCoreData(id:Int64)->Bool{
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "LeagueEntity")
