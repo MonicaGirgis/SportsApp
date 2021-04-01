@@ -113,4 +113,11 @@ extension LeaguesTableViewController : LeaguesCustomTableViewCellDelegate{
         vc.youtubeURL = url
         present(vc, animated: true, completion: nil)
     }
+    
+    func noInternetError(){
+        let alert = UIAlertController(title: "No Internet", message: "Connect to internet to open Channels", preferredStyle: .alert)
+        let cancelBtn = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+        alert.addAction(cancelBtn)
+        present(alert, animated: true, completion: nil)
+    }
 }

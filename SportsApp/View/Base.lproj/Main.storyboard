@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="y5o-fR-iHt">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="y5o-fR-iHt">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -723,16 +723,13 @@
                                                     <rect key="frame" x="5" y="5" width="171" height="158"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="TheHobbit" translatesAutoresizingMaskIntoConstraints="NO" id="UFm-rG-OnL">
-                                                            <rect key="frame" x="8" y="8" width="155" height="100"/>
+                                                            <rect key="frame" x="8" y="8" width="155" height="120"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="height" constant="100" id="XdN-Fx-PSh"/>
+                                                                <constraint firstAttribute="height" constant="120" id="XdN-Fx-PSh"/>
                                                             </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kXt-jM-1jD">
-                                                            <rect key="frame" x="8" y="116" width="155" height="34"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="height" constant="34" id="L4p-mV-T8G"/>
-                                                            </constraints>
+                                                            <rect key="frame" x="8" y="136" width="155" height="14"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
@@ -740,11 +737,12 @@
                                                     </subviews>
                                                     <constraints>
                                                         <constraint firstAttribute="trailing" secondItem="UFm-rG-OnL" secondAttribute="trailing" constant="8" id="1jk-ZN-Y4M"/>
-                                                        <constraint firstItem="kXt-jM-1jD" firstAttribute="top" secondItem="UFm-rG-OnL" secondAttribute="bottom" constant="8" id="3LH-el-PEl"/>
                                                         <constraint firstItem="UFm-rG-OnL" firstAttribute="leading" secondItem="L8f-tM-c1I" secondAttribute="leading" constant="8" id="4sS-Ha-PgP"/>
                                                         <constraint firstItem="UFm-rG-OnL" firstAttribute="top" secondItem="L8f-tM-c1I" secondAttribute="top" constant="8" id="9oN-ff-JU8"/>
+                                                        <constraint firstItem="kXt-jM-1jD" firstAttribute="top" secondItem="UFm-rG-OnL" secondAttribute="bottom" constant="8" id="RBo-67-QXD"/>
                                                         <constraint firstAttribute="trailing" secondItem="kXt-jM-1jD" secondAttribute="trailing" constant="8" id="sHu-M9-R1N"/>
                                                         <constraint firstItem="kXt-jM-1jD" firstAttribute="leading" secondItem="L8f-tM-c1I" secondAttribute="leading" constant="8" id="tJ1-lR-UGK"/>
+                                                        <constraint firstAttribute="bottom" secondItem="kXt-jM-1jD" secondAttribute="bottom" constant="8" id="wWo-IO-kf9"/>
                                                     </constraints>
                                                 </view>
                                             </subviews>
@@ -993,7 +991,7 @@
         <image name="TheHobbit" width="300" height="168"/>
         <image name="close-button" width="512" height="512"/>
         <image name="like" width="32" height="32"/>
-        <image name="youtube-dark" width="900" height="590.4000244140625"/>
+        <image name="youtube-dark" width="1125" height="738"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="RUc-PU-bhF"/>

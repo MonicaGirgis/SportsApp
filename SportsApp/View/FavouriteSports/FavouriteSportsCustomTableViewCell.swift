@@ -7,11 +7,14 @@
 //
 
 import UIKit
+import Reachability
 
 class FavouriteSportsCustomTableViewCell: UITableViewCell {
     
     weak var delegate : LeaguesCustomTableViewCellDelegate?
     var leagueDetail : LeagueDetails?
+    var reachability:Reachability? = Reachability()
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -29,11 +32,24 @@ class FavouriteSportsCustomTableViewCell: UITableViewCell {
     }
 
     @IBAction func gotoYoutube(_ sender: Any) {
-        guard let url = leagueDetail?.youtube, !url.isEmpty else {
-            delegate?.showError()
-            return
+        
+        reachability!.whenReachable = { reachability in
+            guard let url = self.leagueDetail?.youtube, !url.isEmpty else {
+                self.delegate?.showError()
+                return
+            }
+            self.delegate?.didTapYoutubeButton(url: url)
         }
-        delegate?.didTapYoutubeButton(url: url)
+        
+        reachability!.whenUnreachable = { _ in
+            self.delegate?.noInternetError()
+        }
+        
+        do {
+            try reachability!.startNotifier()
+        } catch {
+            print("Unable to start notifier")
+        }
     }
     
     @IBOutlet weak var favouriteSportView: UIView!

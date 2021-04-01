@@ -8,15 +8,17 @@
 
 import UIKit
 import SDWebImage
+import  Reachability
 
 protocol LeaguesCustomTableViewCellDelegate: class{
     func didTapYoutubeButton(url : String)
     func showError()
+    func noInternetError()
 }
-
 
 class LeaguesCustomTableViewCell: UITableViewCell {
     
+    var reachability:Reachability? = Reachability()
     weak var delegate : LeaguesCustomTableViewCellDelegate?
     var leagueDetail : LeagueDetails?
 
@@ -47,11 +49,24 @@ class LeaguesCustomTableViewCell: UITableViewCell {
     }
     
     @IBAction func gotoYoutubeBtn(_ sender: Any) {
-        guard let url = leagueDetail?.youtube, !url.isEmpty else {
-            delegate?.showError()
-            return
+        
+        reachability!.whenReachable = { reachability in
+            guard let url = self.leagueDetail?.youtube, !url.isEmpty else {
+                self.delegate?.showError()
+                return
+            }
+            self.delegate?.didTapYoutubeButton(url: url)
         }
-        delegate?.didTapYoutubeButton(url: url)
+        
+        reachability!.whenUnreachable = { _ in
+            self.delegate?.noInternetError()
+        }
+        
+        do {
+            try reachability!.startNotifier()
+        } catch {
+            print("Unable to start notifier")
+        }
     }
     
 }

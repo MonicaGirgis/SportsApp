@@ -140,7 +140,6 @@
 				1000166726094FB0001A7EA7 /* Info.plist */,
 				1000166226094FB0001A7EA7 /* Assets.xcassets */,
 				85F4EF4C260E0D050099C750 /* Networking */,
-				108B23B82609573A00599128 /* Presenter */,
 				108B23B72609573200599128 /* View */,
 				108B23B62609572B00599128 /* Models */,
 				1000167B26094FC5001A7EA7 /* AppDelegate */,
@@ -214,13 +213,6 @@
 				108B23B92609574400599128 /* AllSportsVC */,
 			);
 			path = View;
-			sourceTree = "<group>";
-		};
-		108B23B82609573A00599128 /* Presenter */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Presenter;
 			sourceTree = "<group>";
 		};
 		108B23B92609574400599128 /* AllSportsVC */ = {
