@@ -39,9 +39,7 @@ class LeaguesTableViewController: UITableViewController {
                 self.leagues = response?.leagues.filter({ (League) -> Bool in
                     League.sport == self.sportSelected
                 }) ?? []
-            //let index = response?.leagues.firstIndex(where: {$0.leagueAlternate == nil})
-            case .failure(let error):
-                print(error)
+            case .failure(_): break
             }
         }
     }

@@ -25,25 +25,23 @@ class FavouriteSportsViewController: UIViewController{
         appDelegate = UIApplication.shared.delegate as! AppDelegate
         manageContext = appDelegate?.persistentContainer.viewContext
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        reachability = try! Reachability()
         
-        reachability!.whenReachable = { reachability in
-            if reachability.connection == .wifi {
                 let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "LeagueEntity")
                 do{
                     self.leagueEntityArray =  try self.manageContext?.fetch(fetchRequest) as! [LeagueEntity]
                     self.leagueArray = []
                     self.fetchSavedData()
                 }
-                catch let fetchError as NSError{
-                    print(fetchError)
+                catch _ as NSError{
+                    //print(fetchError)
                 }
-            }
-        }
+       
+        
         reachability!.whenUnreachable = { _ in
-            print("Not reachable")
+            self.noInternetError()
         }
         
         do {
@@ -51,6 +49,7 @@ class FavouriteSportsViewController: UIViewController{
         } catch {
             print("Unable to start notifier")
         }
+        
         dispatch?.notify(queue: .main){
             self.tableView.reloadData()
         }
@@ -64,8 +63,7 @@ class FavouriteSportsViewController: UIViewController{
                     self.leagueArray = self.leagueArray! + (response?.details)!
                     self.tableView.reloadData()
                     self.dispatch?.leave()
-                case .failure(let error):
-                    print(error)
+                case .failure(_): break
                 }
             }
         }
@@ -78,17 +76,31 @@ class FavouriteSportsViewController: UIViewController{
     }
     @IBOutlet weak var tableView: UITableView!
 }
+
+
+
+
 extension FavouriteSportsViewController:UITableViewDataSource,UITableViewDelegate{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return (leagueArray!.count)
+        if(reachability?.connection == .wifi || reachability?.connection == .cellular){
+            return leagueArray!.count
+        }
+        return leagueEntityArray!.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "FavouriteSportsCustomTableViewCell", for: indexPath) as! FavouriteSportsCustomTableViewCell
-        cell.favouriteSportImg.sd_setImage(with: URL(string:(leagueArray?[indexPath.row].badge)!), placeholderImage: UIImage(named: "not-found"))
-        cell.favouriteSportNameLbl.text = leagueArray?[indexPath.row].name
         cell.delegate = self
-        cell.leagueDetail = leagueArray?[indexPath.row]
+        
+        if(reachability?.connection == .wifi || reachability?.connection == .cellular){
+            cell.favouriteSportImg.sd_setImage(with: URL(string:(leagueArray?[indexPath.row].badge)!), placeholderImage: UIImage(named: "not-found"))
+            cell.favouriteSportNameLbl.text = leagueArray?[indexPath.row].name
+            cell.leagueDetail = leagueArray?[indexPath.row]
+            return cell
+        }
+        
+        cell.favouriteSportImg.sd_setImage(with: URL(string:(leagueEntityArray?[indexPath.row].leagueImage) ?? ""), placeholderImage: UIImage(named: "not-found"))
+        cell.favouriteSportNameLbl.text = leagueEntityArray?[indexPath.row].leagueName
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -122,7 +134,7 @@ extension FavouriteSportsViewController : LeaguesCustomTableViewCellDelegate{
     }
     
     func noInternetError(){
-        let alert = UIAlertController(title: "No Internet", message: "Connect to internet to open Channels", preferredStyle: .alert)
+        let alert = UIAlertController(title: "No Internet", message: "Connect to internet from Settings", preferredStyle: .alert)
         let cancelBtn = UIAlertAction(title: "OK", style: .cancel, handler: nil)
         alert.addAction(cancelBtn)
         present(alert, animated: true, completion: nil)

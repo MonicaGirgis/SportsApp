@@ -57,8 +57,7 @@ class LeaguesDetailssViewController: UIViewController {
             switch result{
             case .success(let response):
                 self.events = response?.events
-            case .failure(let error):
-                print(error)
+            case .failure(_): break
             }
         }
     }
@@ -67,8 +66,7 @@ class LeaguesDetailssViewController: UIViewController {
             switch result{
             case .success(let value):
                 self.teams = value?.teams
-            case .failure(let error):
-                print(error)
+            case .failure(_): break
             }
         }
     }
@@ -88,6 +86,8 @@ class LeaguesDetailssViewController: UIViewController {
         let Entity = NSEntityDescription.entity(forEntityName: "LeagueEntity", in: manageContext!)
         team1 = NSManagedObject(entity: Entity!, insertInto: manageContext)
         team1?.setValue(Int((leagueDetails?.idLeague)!), forKey: "leagueIdd")
+        team1?.setValue(leagueDetails?.name, forKey: "leagueName")
+        team1?.setValue(leagueDetails?.badge, forKey: "leagueImage")
         do{
             try manageContext?.save()
             print("Data Saved")

@@ -8,8 +8,9 @@
 
 import UIKit
 import SDWebImage
+
+
 class AllSportsViewController: UIViewController {
-    
     
     var sportArray : SportData = SportData(){
         didSet{
@@ -22,22 +23,23 @@ class AllSportsViewController: UIViewController {
         FetchData()
     }
     
-
+    
     @IBOutlet weak var collectionView: UICollectionView!
     
     func FetchData(){
         APICall<SportsNetworking>.fetchData(target: .getSports, responseClass: SportData.self) { (result) in
-                        switch result {
-                        case .success(let response):
-                            self.sportArray = response ?? SportData()
-                          
-                        case .failure(let error):
-                            print(error)
-                        }
-                    }
+            switch result {
+            case .success(let response):
+                self.sportArray = response ?? SportData()
+            case .failure(let _): break
+            }
+        }
     }
 }
 
+
+
+//MARK:- UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout
 extension AllSportsViewController:UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         //print(sportArray.sports.count)
@@ -49,7 +51,7 @@ extension AllSportsViewController:UICollectionViewDataSource,UICollectionViewDel
         cell.sportsName.text = sportArray.sports[indexPath.row].name
         let imageUrl = sportArray.sports[indexPath.row].thumb
         cell.sportsImage.sd_setImage(with: URL(string: imageUrl), placeholderImage: UIImage(named: "JourneyToTheCenterOfEarth"))
-      // cell.sportsImage.Alamofire.setImage(withURL: imageUrl)
+        // cell.sportsImage.Alamofire.setImage(withURL: imageUrl)
         cell.sportsView.layer.borderWidth = 3
         cell.sportsView.layer.borderColor = UIColor(red:222/255, green:69/255, blue:0/255, alpha: 1).cgColor
         cell.sportsView.layer.cornerRadius = 8
