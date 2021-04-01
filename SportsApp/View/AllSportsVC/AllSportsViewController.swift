@@ -31,7 +31,8 @@ class AllSportsViewController: UIViewController {
             switch result {
             case .success(let response):
                 self.sportArray = response ?? SportData()
-            case .failure(let _): break
+            case .failure(_):
+                break
             }
         }
     }
